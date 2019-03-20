@@ -237,4 +237,37 @@ Autor: Francisco Domínguez Lorente -->
 	</template>
 </category>
 
+<category>
+	<pattern>* la serie <set>seriesnetflix</set> en *</pattern>
+	<template>
+		<think><set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set></think>
+		<srai>FINDITEM <star index="3"/> IN <get var="tmp"/></srai>
+	</template>
+</category>
+
+<!-- Numero de idiomas, subtitulos, capitulos totales, capitulos de una temporada... -->
+<category>
+	<pattern>* cuantos idiomas esta <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set></think>
+		<think><set var="tmp2"><srai>decode_fields <map><name><star index="2"/></name>subtitulos</map></srai></set></think>
+		<think><set var="tmp3"><srai>COUNT <get var="tmp"/></srai></set></think>
+		<think><set var="tmp4"><srai>COUNT <get var="tmp2"/></srai></set></think>
+		La serie <star index="2"/> esta disponible en <get var="tmp3"/> idiomas de audio con <get var="tmp4"/> subtitulos
+	</template>
+</category>
+
+<category>
+	<pattern>cuantos capitulos tiene la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set var="tmp"><srai>decode_fi</set></think>
+	</template>
+</category>
+
+<category>
+	<pattern>cuantos capitulos tiene <set>seriesnetflix</set> en total</pattern>
+	<template>
+
+	</template>
+</category>
 </aiml>
