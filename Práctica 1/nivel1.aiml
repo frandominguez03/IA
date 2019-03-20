@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<!-- Prácticas Inteligencia Artificial - Nivel 1
+Autor: Francisco Domínguez Lorente -->
+
+<!-- Cuando pregunta para añadir un capitulo a la temporada de una serie -->
+<category>
+	<pattern>* capitulo a la temporada * de la serie <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set name="topic">addcap</set></think>
+		<think><set name="temporada"><star index="2"/></set></think>
+		<think><set name="serie"><star index="3"/></set></think>
+		Perfecto, vamos a ello. Dime el nombre del capitulo.
+	</template>
+</category>
+
+<category>
+	<pattern>* capitulo a la temporada * de la serie *</pattern>
+	<template>
+		Esa serie <think><set name="serie"><star index="2"/></set></think> no esta en el catalogo, si quieres la aniado
+	</template>
+</category>
+
+<!-- Cuando pregunta para añadir el primer capitulo a la temporada de una serie -->
+<category>
+	<pattern>* el primer capitulo de la temporada * de la serie <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set name="topic">addcap2</set></think>
+		<think><set name="temporada"><star index="2"/></set></think>
+		<think><set name="serie"><star index="3"/></set></think>
+		Perfecto, vamos a ello. Dime el nombre del capitulo.
+	</template>
+</category>
+
+<category>
+	<pattern>* el primer capitulo de la temporada * de la serie *</pattern>
+	<template>
+		Esa serie <think><set name="serie"><star index="2"/></set></think> no esta en el catalogo, si quieres la aniado
+	</template>
+</category>
+
+<!-- Añadiendo un capitulo a la temporada de una serie -->
+<topic name="addcap">
+	<category>
+		<pattern>Si ^</pattern>
+		<template>
+			Genial. Dime el nombre del capitulo.
+		</template>
+	</category>
+
+	<category>
+		<pattern>*</pattern>
+		<template>
+			<think><set name="titcap"><srai>code <star/></srai></set></think>
+			Lo apunto. Ahora dime la <set name="topic">duracion</set> del capitulo.
+		</template>
+	</category>
+</topic>
+
+<topic name="duracion">
+	<category>
+		<pattern><set>number</set></pattern>
+		<template>
+			<think><set var="tmp"><srai>decode_fields <map><name><get name="serie"/></name>temporada<get name="temporada"/></map></srai></set></think>
+
+			<modifymap>
+				<name><get name="serie"/></name>
+				<key>temporada<get name="temporada"/></key>
+				<value><srai>code_fields <get var="tmp"/> <get name="titcap"/> <star/></srai></value>
+			</modifymap>
+			¡Estupendo! Ya está en la lista el capitulo. Que lo disfrutes.
+		</template>
+	</category>
+</topic>
+
+<!-- Añadiendo el primer capitulo a la temporada de una serie -->
+<topic name="addcap2">
+	<category>
+		<pattern>*</pattern>
+		<template>
+			<addtomap>
+				<name><get name="serie"/></name>
+				<key>temporada<get name="temporada"/></key>
+				<value><srai>code <star/></srai></value>
+			</addtomap>
+			<think><set name="titcap"><srai>code <star/></srai></set></think>
+			<think><set name="topic">duracion2</set></think>
+			Lo apunto. Ahora dime la duracion del capitulo.
+		</template>
+	</category>
+</topic>
+
+<topic name="duracion2">
+	<category>
+		<pattern><set>number</set></pattern>
+		<template>
+			<think><set var="tmp"><map><name><get name="serie"/></name>temporada<get name="temporada"/></map></set></think>
+			<think><set var="tmp2"><srai>code_fields <get name="titcap"/> <star/></srai></set></think>
+
+			<modifymap>
+				<name><get name="serie"/></name>
+				<key>temporada<get name="temporada"/></key>
+				<value><get var="tmp2"/></value>
+			</modifymap>
+			¡Estupendo! Ya está en la lista el capitulo. Que lo disfrutes.
+		</template>
+	</category>
+</topic>
+
+<!-- Añadir una serie-->
+<category>
+	<pattern>De que va la serie <set>seriesnetflix</set></pattern>
+	<template>
+		<srai>decode <map><name><star/></name>sinopsis</map></srai>
+	</template>
+</category>
+
+<category>
+	<pattern>De que va la serie *</pattern>
+	<template>
+		Esa serie <think><set name="serie"><star/></set></think> no esta en el catalogo, si quieres la aniado
+	</template>
+</category>
+
+<category>
+	<pattern>Si ^</pattern>
+	<that>Esa serie no esta en el catalogo, si quieres la aniado</that>
+	<template>
+		Perfecto. Crea en la carpeta maps un archivo llamado <get name="serie"/>.txt. Cuando hayas terminado reiniciame y al volver, pideme que anada la serie <get name="serie"/>.
+	</template>
+</category>
+
+<category>
+	<pattern>Aniade la serie *</pattern>
+	<template>
+		<think><set name="serie"><star/></set></think>Me pongo a ello, dime su <set name="topic">plataforma</set>, por favor
+	</template>
+</category>
+
+<topic name="plataforma">
+	<category>
+		<pattern>*</pattern>
+		<template>
+			<addtoset>
+				<name>series<star/></name>
+				<key><get name="serie"/></key>
+			</addtoset>
+			Genial, ahora necesito que me digas a que <set name="topic">genero</set> pertenece
+		</template>
+	</category>
+</topic>
+
+<topic name="genero">
+	<category>
+		<pattern>*</pattern>
+			<template>
+				<addtomap>
+					<name><get name="serie"/></name>
+					<key>genero</key>
+					<value><srai>code_fields <star/></srai></value>
+				</addtomap>
+				Ahora dame una <set name="topic">descripcion</set> de la serie
+			</template>
+	</category>
+</topic>
+
+<topic name="descripcion">
+	<category>
+		<pattern>*</pattern>
+			<template>
+				<addtomap>
+					<name><get name="serie"/></name>
+					<key>sinopsis</key>
+					<value><srai>code <star/></srai></value>
+				</addtomap>
+				Una cosa menos, ahora la lista de <set name="topic">idiomas</set> del audio de la serie
+			</template>
+	</category>
+</topic>
+
+<topic name="idiomas">
+	<category>
+		<pattern>*</pattern>
+			<template>
+				<addtomap>
+					<name><get name="serie"/></name>
+					<key>idiomas</key>
+					<value><srai>code_fields <star/></srai></value>
+				</addtomap>
+				Ahora la lista de idiomas de <set name="topic">subtitulos</set> de la serie
+			</template>
+	</category>
+</topic>
+
+<topic name="subtitulos">
+	<category>
+		<pattern>*</pattern>
+			<template>
+				<addtomap>
+					<name><get name="serie"/></name>
+					<key>subtitulos</key>
+					<value><srai>code_fields <star/></srai></value>
+				</addtomap>
+				Si conoces alguna direccion <set name="topic">web</set> de la serie, dimela
+			</template>
+	</category>
+</topic>
+
+<topic name="web">
+	<category>
+		<pattern>*</pattern>
+			<template>
+				<addtomap>
+					<name><get name="serie"/></name>
+					<key>web</key>
+					<value><star/></value>
+				</addtomap>
+				<think><set name="topic">addcap</set></think>
+				Ya tengo la informacion basica de la serie. ¿Quieres añadir capítulos a la serie?
+			</template>
+	</category>
+</topic>
+
+<!-- Preguntar por los idiomas de una serie -->
+<category>
+	<pattern>* idiomas * serie <set>seriesnetflix</set></pattern>
+	<template>
+		La serie <star index="3"/> esta en audio en los idiomas <srai>decode_fields <map><name><star index="3"/></name>idiomas</map></srai> y con subtitulos en los idiomas <srai>decode_fields <map><name><star index="3"/></name>subtitulos</map></srai>
+	</template>
+</category>
+
+<category>
+	<pattern>* idiomas * serie *</pattern>
+	<template>
+		Esa serie <think><set name="serie"><star index="2"/></set></think> no esta en el catalogo, si quieres la aniado
+	</template>
+</category>
+
+</aiml>

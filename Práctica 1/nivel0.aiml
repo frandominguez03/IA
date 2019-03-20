@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<!-- Prácticas Inteligencia Artificial - Nivel 0
+Autor: Francisco Domínguez Lorente -->	
+
+<!-- Pregunta 1 -->
+<category>
+	<pattern>Hablame ^ de ti</pattern>
+	<template>Mi nombre es Francisco y soy estudiante de Ingeniería Informática en Granada</template>
+</category>
+
+<!-- Pregunta 2 -->
+<category>
+	<pattern>* mayor defecto ^</pattern>
+	<template>En ocasiones prefiero trabajar de forma individual porque me concentro mucho mejor que trabajando en grupo</template>
+</category>
+
+<!-- Pregunta 3 -->
+<category>
+	<pattern>* aspectos no te gustan de un jefe ^</pattern>
+	<template>Cada jefe usa metodologías de trabajo distintas, pero se adaptarme bastante bien a cada una de ellas</template>
+</category>
+
+<!-- Pregunta 4 -->
+<category>
+	<pattern>* 3 mayores virtudes ^</pattern>
+	<template>Soy una persona a la que siempre le gusta aprender, y creo que en esta empresa podré aprender muchas cosas.
+	En segundo lugar [...]</template>
+</category>
+
+<!-- Pregunta 5 -->
+<category>
+	<pattern>* desempenar las funciones de este puesto ^</pattern>
+	<template>Personalmente no estoy muy familiarizado con algunos puntos del puesto, pero siento
+	que puedo adaptarme a ellos con cierta facilidad.</template>
+</category>
+
+<!-- Pregunta 6 -->
+<category>
+	<pattern>* experiencia en realizacion de proyectos en equipos de trabajo ^</pattern>
+	<template>He trabajo con distintos grupos de trabajo, algunos de ellos eran grandes y otro más reducidos,
+		y en general me he desempeñado bastante bien en todos ellos</template>
+</category>
+
+<!-- Pregunta 7 -->
+<category>
+	<pattern>* trabajo * no * especialidad ^</pattern>
+	<template>Siempre estoy dispuesto a aprender, y realizar otros trabajos que no sean acordes a mi especialidad
+		es un reto del que se pueden aprender muchas cosas</template>
+</category>
+
+<!-- Pregunta 8 -->
+<category>
+	<pattern>* desplazarias * a otros lugares ^</pattern>
+	<template>En principio no supondría ningún problema desplazarme a otros lugares, es algo a lo que estoy dispuesto</template>
+</category>
+
+<!-- Pregunta 9 -->
+<category>
+	<pattern>* consideras una persona creativa ^</pattern>
+	<template>A veces puedo ser muy creativo y venir con ideas impresionantes, pero otras veces puedo
+		quedarme rezagado en cuanto a nuevas ideas o formas de abordar un problema</template>
+</category>
+
+<!-- Pregunta 10 -->
+<category>
+	<pattern>* expectativas de este trabajo ^</pattern>
+	<template>De conseguir el puesto sería mi primer trabajo en una empresa profesional, y la emoción
+		y el entusiasmo están por las nubes</template>
+</category>
+
+<!-- Pregunta 11 -->
+<category>
+	<pattern>* trabajos * en esta tematica ^</pattern>
+	<template>Si, he trabajado en otras empresas que han usado los mismos recursos y conceptos que los que se especifican
+		en la oferta de trabajo. No obstante, hay otros aspectos que no he trabajado</template>
+</category>
+
+<!-- Pregunta 12 -->
+<category>
+	<pattern>* llevas * trabajo * casa ^</pattern>
+	<template>Siempre intento respetar las horas en la oficina, pero cuando se me ilumina la bombilla y estoy en casa
+		o en cualquier otro sitio, intento al menos apuntar la idea para llevarla a cabo en otro momento</template>
+</category>
+
+<!-- Pregunta 13 -->
+<category>
+	<pattern>* aspiraciones salariales ^</pattern>
+	<template>Soy consciente de que no tengo experiencia como tal, pero estoy seguro de que puedo adaptarme rápidamente, y
+		de la misma forma considero que lo podría hacer mi salario</template>
+</category>
+
+<!-- Pregunta 14 -->
+<category>
+	<pattern>* te ves * 5 anios ^</pattern>
+	<template>Mi objetivo principal es seguir formándome profesionalmente, así que estaré donde crea oportuno acorde
+		a mis aspiraciones profesionales</template>
+</category>	
+
+<!-- Pregunta 15 -->
+<category>
+	<pattern>No * experiencia * trabajo ^</pattern>
+	<template>Hay muchas cosas que no nos enseñan en la universidad, pero me considero una persona capaz de aprender
+		rápido y adaptarme a modelos diferentes de trabajo</template>
+</category>
+
+<!-- Pregunta 16 -->
+<category>
+	<pattern>* sabes de la empresa * puesto ^</pattern>
+	<template>Es una empresa de la que llevo siguiendo sus movimientos bastante tiempo y su curso de acciones me parece
+		muy bueno comparado con otras empresas del mismo sector. Trabajar aquí sería alcanzar una meta personal</template>
+</category>
+
+<!-- Pregunta 17 -->
+<category>
+	<pattern>* jefe no tiene razon ^</pattern>
+	<template>Los jefes en general se caracterizan por tener un mayor conocimiento del trabajo y una experiencia superior
+		a la del resto de trabajadores, por lo que seguramente el que no tenga razón sea yo y deba de reconsiderar los hechos
+	</template>
+</category>
+
+<!-- Pregunta 18 -->
+<category>
+	<pattern>Por que * escogerte ^</pattern>
+	<template>Ahora mismo puedo no ser la mejor opción para el puesto por mi poca experiencia, pero a largo plazo
+		estoy convencido de que seré una gran aportación a la empresa</template>
+</category>
+
+</aiml>
