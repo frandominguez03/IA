@@ -258,16 +258,27 @@ Autor: Francisco Domínguez Lorente -->
 </category>
 
 <category>
-	<pattern>cuantos capitulos tiene la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
+	<pattern>Cuantos capitulos tiene la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
 	<template>
-		<think><set var="tmp"><srai>decode_fi</set></think>
+		<think><set var="caps-dobles"><srai>decode_fields <map><name><star index="2"/></name>temporada<star index="1"/></map></srai></set></think>
+		<think><set var="caps-dobles"><srai>COUNT <get var="caps-dobles"/></srai></set></think>
+
+		<think><set var="caps_final"><map><name>mitad</name><get var="caps-dobles"/></map></set></think>
+		La temporada <star index="1"/> de la serie <star index="2"/> tiene <get var="caps_final"/> capítulos.
 	</template>
 </category>
 
 <category>
-	<pattern>cuantos capitulos tiene <set>seriesnetflix</set> en total</pattern>
+	<pattern>Cuantos capitulos tiene <set>seriesnetflix</set> *</pattern>
 	<template>
+		<think><set var="tmp-temporada">1</set></think>
+		<think><set var="hay-temporada"><srai>decode_fields <map><name><star/></name>temporada<get var="tmp-temporada"/></map></srai></set></think>
 
+		<condition var="hay-temporada">
+			<li><value>temporada<set>number</set></value>
+				<think><set var="tmp-caps"><srai>COUNT <get var="hay-temporada"/></srai></set></think>
+			</li>
+		</condition>
 	</template>
 </category>
 </aiml>
