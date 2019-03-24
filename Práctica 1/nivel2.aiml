@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+	<!-- Prácticas Inteligencia Artificial - Nivel 2
+Autor: Francisco Domínguez Lorente -->
+
+<!-- Preguntar por los idiomas de una serie -->
+<category>
+	<pattern>* idiomas * serie <set>seriesnetflix</set></pattern>
+	<template>
+		La serie <star index="3"/> esta en audio en los idiomas <srai>decode_fields <map><name><star index="3"/></name>idiomas</map></srai> y con subtitulos en los idiomas <srai>decode_fields <map><name><star index="3"/></name>subtitulos</map></srai>
+	</template>
+</category>
+
+<category>
+	<pattern>* idiomas * serie *</pattern>
+	<template>
+		Esa serie <think><set name="serie"><star index="2"/></set></think> no esta en el catalogo, si quieres la aniado
+	</template>
+</category>
+
+<category>
+	<pattern>* la serie <set>seriesnetflix</set> en *</pattern>
+	<template>
+		<think><set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set></think>
+		<srai>FINDITEM <star index="3"/> IN <get var="tmp"/></srai>
+	</template>
+</category>
+
+<!-- Numero de idiomas, subtitulos, capitulos totales, capitulos de una temporada... -->
+<category>
+	<pattern>* cuantos idiomas esta <set>seriesnetflix</set></pattern>
+	<template>
+		<think>
+			<set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set>
+			<set var="tmp2"><srai>decode_fields <map><name><star index="2"/></name>subtitulos</map></srai></set>
+			<set var="tmp3"><srai>COUNT <get var="tmp"/></srai></set>
+			<set var="tmp4"><srai>COUNT <get var="tmp2"/></srai></set>
+		</think>
+
+		La serie <star index="2"/> esta disponible en <get var="tmp3"/> idiomas de audio con <get var="tmp4"/> subtitulos
+	</template>
+</category>
+
+<category>
+	<pattern>Cuantos capitulos tiene la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
+	<template>
+		<think>
+			<set var="caps-dobles"><srai>decode_fields <map><name><star index="2"/></name>temporada<star index="1"/></map></srai></set>
+			<set var="caps-dobles"><srai>COUNT <get var="caps-dobles"/></srai></set>
+			<set var="caps_final"><map><name>mitad</name><get var="caps-dobles"/></map></set>
+		</think>
+
+		La temporada <star index="1"/> de la serie <star index="2"/> tiene <get var="caps_final"/> capítulos.
+	</template>
+</category>
+
+<!-- Preguntar cuantos capitulos tiene una serie en total -->
+<category>
+	<pattern>Cuantos capitulos tiene <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set var="contador">1</set></think>
+		<think><set var="bucle"><map><name><star/></name>temporada<get var="contador"/></map></set></think>
+		<think><set var="total">0</set></think>
+
+		<condition var="bucle">
+			<li value="unknown"></li>
+			<li>
+				<think>
+					<set var="capitulos"><srai>decode_fields <map><name><star/></name>temporada<get var="contador"/></map></srai></set>
+					<set var="tmp"><srai>COUNT <get var="capitulos"/></srai></set>
+					<set var="numcaps"><map><name>mitad</name><get var="tmp"/></map></set>
+					<set var="contadorcaps">0</set>
+				</think>
+
+				<condition var="contadorcaps">
+					<li><value><get var="numcaps"/></value></li>
+					<li>
+						<think>
+							<set var="total"><map name="successor"><get var="total"/></map></set>
+							<set var="contadorcaps"><map name="successor"><get var="contadorcaps"/></map></set>
+						</think>
+						<loop/>
+					</li>
+				</condition>
+
+				<think>
+					<set var="contador"><map name="successor"><get var="contador"/></map></set>
+					<set var="bucle"><map><name><star/></name>temporada<get var="contador"/></map></set>
+				</think>
+				<loop/>
+			</li>
+		</condition>
+
+		Tiene <get var="total"/> capitulos
+	</template>
+</category>
+
+<!-- Preguntar por el numero de temporadas de una serie -->
+<category>
+	<pattern>Cuantas temporadas tiene <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set var="contador">1</set></think>
+		<think><set var="bucle"><map><name><star/></name>temporada<get var="contador"/></map></set></think>
+
+		<condition var="bucle">
+			<li value="unknown"></li>
+			<li>
+				<think>
+					<set var="contador"><map name="successor"><get var="contador"/></map></set>
+					<set var="bucle"><map><name><star/></name>temporada<get var="contador"/></map></set>
+				</think>	
+				<loop/>
+			</li>
+		</condition>
+
+		<think><set var="contador"><map name="predecessor"><get var="contador"/></map></set></think>
+		Tiene <get var="contador"/> temporadas
+	</template>
+</category>
+
+<!-- Preguntar por el nombre de un capitulo concreto de una temporada de una serie -->
+<category>
+	<pattern>Como se llama el capitulo <set>number</set> de la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
+	<template>
+		<think>
+			<set var="caps"><srai>decode_fields <map><name><star index="3"/></name>temporada<star index="2"/></map></srai></set>
+			<set var="busca"><map><name>doble</name><star index="1"/></map></set>
+			<set var="busca"><map name="predecessor"><get var="busca"/></map></set>
+			<set var="capitulo"><srai>SELECTITEM <get var="busca"/> IN <get var="caps"/></srai></set>
+			<set var="capitulo"><srai>decode <get var="capitulo"/></srai></set>
+		</think>
+
+		El capitulo se llama "<get var="capitulo"/>".
+	</template>	
+</category>
+
+<!-- Duración de un capitulo concreto de una temporada de una serie -->
+<category>
+	<pattern>Cuanto dura el capitulo <set>number</set> de la temporada <set>number</set> de <set>seriesnetflix</set></pattern>
+	<template>
+		<think><set var="caps"><srai>decode_fields <map><name><star index="3"/></name>temporada<star index="2"/></map></srai></set></think>
+		<think><set var="busca"><map><name>doble</name><star index="1"/></map></set></think>
+		<think><set var="duracion"><srai>SELECTITEM <get var="busca"/> IN <get var="caps"/></srai></set></think>
+		<think><set var="duracion"><srai>decode <get var="duracion"/></srai></set></think>
+
+		El capitulo dura <get var="duracion"/> minutos
+	</template>	
+</category>
