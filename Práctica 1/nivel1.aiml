@@ -50,6 +50,13 @@ Autor: Francisco Domínguez Lorente -->
 	</category>
 
 	<category>
+		<pattern>No ^</pattern>
+		<template>
+			Hemos terminado entonces
+		</template>
+	</category>
+
+	<category>
 		<pattern>*</pattern>
 		<template>
 			<think><set name="titcap"><srai>code <star/></srai></set></think>

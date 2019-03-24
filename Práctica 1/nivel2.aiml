@@ -20,10 +20,20 @@ Autor: Francisco Domínguez Lorente -->
 </category>
 
 <category>
-	<pattern>* la serie <set>seriesnetflix</set> en *</pattern>
+	<pattern>* la serie <set>seriesnetflix</set> en * ^</pattern>
 	<template>
-		<think><set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set></think>
-		<srai>FINDITEM <star index="3"/> IN <get var="tmp"/></srai>
+		<think>
+			<set var="tmp"><srai>decode_fields <map><name><star index="2"/></name>idiomas</map></srai></set>
+			<set var="indice"><srai>FINDITEM <star index="3"/> IN <get var="tmp"/></srai></set>
+			<set var="resultado"><srai>SELECTITEM <get var="indice"/> IN <get var="tmp"/></srai></set>
+		</think>
+
+		<condition var="resultado">
+			<li><value>$</value> No está en ese idioma</li>
+			<li>
+				Sí, está en ese idioma.
+			</li>
+		</condition>
 	</template>
 </category>
 
@@ -147,3 +157,4 @@ Autor: Francisco Domínguez Lorente -->
 		El capitulo dura <get var="duracion"/> minutos
 	</template>	
 </category>
+</aiml>
