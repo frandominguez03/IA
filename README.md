@@ -1,5 +1,5 @@
 # IA
-Repositorio para las prácticas de la asignatura de Inteligencia Artificial. Grado en Ingeniería Informática Curso 2018-2019.
+Repositorio para las prácticas de la asignatura de Inteligencia Artificial. Grado en Ingeniería Informática Curso 2018-2019 (UGR).
 
 ## Autor
 Francisco Domínguez Lorente
